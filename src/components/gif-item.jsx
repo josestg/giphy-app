@@ -4,7 +4,6 @@ import {
   Flex,
   Image,
   Spinner,
-  Tooltip,
   useClipboard,
   useToast,
 } from "@chakra-ui/react";

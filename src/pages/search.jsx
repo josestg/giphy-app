@@ -1,51 +1,11 @@
 import React from "react";
-import debounce from "lodash.debounce";
+import { Flex, Input, Stack } from "@chakra-ui/react";
 
-import {
-  Button,
-  Flex,
-  Heading,
-  Input,
-  SimpleGrid,
-  Stack,
-} from "@chakra-ui/react";
-import { GifItem, GiftList } from "../components";
+import { GiftList } from "../components";
+import { useGiphySearchAPI } from "../hooks";
 
 export function SearchPage(props) {
-  const [gifs, setGifs] = React.useState([]);
-  const [keyword, setKeyword] = React.useState("");
-
-  React.useEffect(() => {
-    const keywordParams = new URLSearchParams(keyword).toString();
-    fetch(
-      `https://api.giphy.com/v1/gifs/search?api_key=cl15uxxlaJNkx41SH105GNl0mAdB2M1J&q=${keywordParams}&limit=9&offset=0&rating=g&lang=en`
-    )
-      .then((response) => response.json())
-      .then((body) =>
-        body.data.map((item) => ({
-          images: item.images,
-          embedURL: item["embed_url"],
-        }))
-      )
-      .then((images) => setGifs(images));
-  }, [keyword]);
-
-  // Stop the invocation of the debounced function
-  // after unmounting
-  React.useEffect(() => {
-    return () => {
-      debouncedChangeHandler.cancel();
-    };
-  }, []);
-
-  const changeHandler = (event) => {
-    setKeyword(event.target.value);
-  };
-
-  const debouncedChangeHandler = React.useMemo(
-    () => debounce(changeHandler, 300),
-    [setKeyword]
-  );
+  const { gifs, updateKeyword } = useGiphySearchAPI("", 0, 9);
 
   return (
     <Flex
@@ -66,7 +26,7 @@ export function SearchPage(props) {
         <Input
           variant="filled"
           placeholder="Search here..."
-          onChange={debouncedChangeHandler}
+          onChange={(e) => updateKeyword(e.target.value)}
         />
       </Stack>
       <GiftList gifs={gifs} />
