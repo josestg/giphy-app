@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Button, Flex, Heading, SimpleGrid, Stack } from "@chakra-ui/react";
-import { GifItem } from "../components";
+import { Button, Flex, Heading, Stack } from "@chakra-ui/react";
+import { GiftList } from "../components";
 
 export function IronManPage(props) {
   const [gifs, setGifs] = React.useState([]);
@@ -50,12 +50,7 @@ export function IronManPage(props) {
           <Button onClick={() => setPage((page) => page + 1)}>Next</Button>
         </Flex>
       </Stack>
-      <SimpleGrid w="100%" mx="auto" border="2px" columns={[1, 3]} spacing={8}>
-        {gifs.map((gif) => {
-          const { url } = gif.images["fixed_height"];
-          return <GifItem key={url} url={url} embedURL={gif.embedURL} />;
-        })}
-      </SimpleGrid>
+      <GiftList gifs={gifs} />
     </Flex>
   );
 }
