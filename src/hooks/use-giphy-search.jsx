@@ -5,10 +5,12 @@ export function useGiphySearchAPI(initialKeyword, offset, limit) {
   const [gifs, setGifs] = React.useState([]);
   const [keyword, setKeyword] = React.useState(initialKeyword);
 
+  const apiKey = process.env.REACT_APP_API_KEY;
+
   React.useEffect(() => {
     const keywordParams = new URLSearchParams(keyword).toString();
     fetch(
-      `https://api.giphy.com/v1/gifs/search?api_key=cl15uxxlaJNkx41SH105GNl0mAdB2M1J&q=${keywordParams}&limit=${limit}&offset=${offset}&rating=g&lang=en`
+      `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${keywordParams}&limit=${limit}&offset=${offset}&rating=g&lang=en`
     )
       .then((response) => response.json())
       .then((body) =>
