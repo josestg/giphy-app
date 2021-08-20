@@ -20,7 +20,7 @@ export function useGiphySearchAPI(initialKeyword, offset, limit) {
         }))
       )
       .then((images) => setGifs(images));
-  }, [keyword, offset, limit]);
+  }, [keyword, offset, limit, apiKey]);
 
   const updateKeyword = React.useCallback(
     (value) => {
